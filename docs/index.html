@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MarkDown Editor — Lecteur et éditeur Markdown natif pour Windows</title>
+<meta name="description" content="MarkDown Editor : un lecteur et éditeur Markdown natif pour Windows, 100 % portable et 100 % hors-ligne, sous licence GPL-3.0-or-later." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='4' fill='%232F6F5E'/%3E%3Cpath d='M6 8h5M6 12h9M6 16h6' stroke='%23F5F4F0' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F5F4EF;
+    --panel:#FFFFFF;
+    --ink:#1C1E1B;
+    --ink-soft:#5B5C54;
+    --line:#E2DFD3;
+    --accent:#2F6F5E;
+    --accent-dark:#21584A;
+    --accent-amber:#C98A2C;
+    --dark-bg:#15191A;
+    --dark-ink:#ECE9E1;
+    --dark-line:#2B322F;
+    --dark-accent:#63CDAF;
+    --radius:10px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:88px;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    font-weight:600;
+    line-height:1.12;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  code, .mono{font-family:'JetBrains Mono', ui-monospace, monospace;}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,244,239,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .wordmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:17px;
+    text-decoration:none; color:var(--ink);
+  }
+  .wordmark svg{display:block;}
+  .nav-links{display:flex; align-items:center; gap:28px;}
+  .nav-links a{
+    font-size:14.5px; text-decoration:none; color:var(--ink-soft);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links .nav-cta{
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:7px 14px;
+    border-radius:999px;
+    display:flex; align-items:center; gap:7px;
+  }
+  .nav-links .nav-cta:hover{border-color:var(--accent); color:var(--accent-dark);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 88px;}
+  .hero .wrap{
+    display:grid; grid-template-columns:1fr; gap:46px;
+  }
+  .hero h1{
+    font-size:clamp(34px, 5vw, 54px);
+    max-width:15ch;
+  }
+  .hero .lede{
+    margin:20px 0 0; max-width:46ch;
+    font-size:18px; color:var(--ink-soft);
+  }
+  .hero-cta{display:flex; gap:12px; margin-top:30px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:8px;
+    font-size:15px; font-weight:500; text-decoration:none;
+    border:1px solid transparent; transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-ghost{border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent-dark);}
+  .hero-meta{
+    margin:22px 0 0; font-size:13.5px; color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  /* hero demo window */
+  .demo{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--panel);
+    box-shadow:0 24px 60px -34px rgba(28,30,27,0.35);
+    overflow:hidden;
+  }
+  .demo-toolbar{
+    display:flex; align-items:center; gap:6px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    background:#FAF9F5;
+  }
+  .demo-dots{display:flex; gap:6px; margin-right:8px;}
+  .demo-dots span{width:9px; height:9px; border-radius:50%; background:var(--line);}
+  .demo-mode{
+    display:flex; align-items:center; gap:6px;
+    font-size:12.5px; color:var(--ink-soft);
+    padding:6px 10px; border-radius:7px; border:1px solid transparent;
+  }
+  .demo-mode.is-active{
+    background:#EDF4F1; border-color:#CFE3DC; color:var(--accent-dark); font-weight:500;
+  }
+  .demo-mode svg{width:14px; height:14px; flex:none;}
+  .demo-panels{
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  .demo-panel{padding:22px 24px; min-height:230px;}
+  .demo-source{
+    background:#FBFAF7;
+    border-right:1px solid var(--line);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; line-height:1.75; color:#6B6C63;
+    white-space:pre-wrap;
+  }
+  .demo-source .tok-h{color:var(--accent-dark); font-weight:500;}
+  .demo-source .tok-b{color:var(--ink); font-weight:600;}
+  .demo-source .tok-i{color:var(--ink); font-style:italic;}
+  .demo-source .cursor{
+    display:inline-block; width:2px; height:13px; background:var(--accent-amber);
+    vertical-align:-2px; animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .demo-rendered h4{
+    font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:600;
+    margin:0 0 12px; border-bottom:1px solid var(--line); padding-bottom:10px;
+  }
+  .demo-rendered p{margin:0 0 12px; font-size:14.5px; color:var(--ink);}
+  .demo-rendered ul{margin:0; padding-left:20px; font-size:14.5px;}
+  .demo-rendered li{margin-bottom:6px;}
+  .demo-rendered li::marker{color:var(--accent);}
+
+  @media (min-width:860px){
+    .hero .wrap{grid-template-columns:0.95fr 1.05fr; align-items:center;}
+  }
+
+  /* ---------- checklist ---------- */
+  .section{padding:70px 0;}
+  .section-head{max-width:52ch; margin:0 0 40px;}
+  .section-head h2{font-size:clamp(26px,3vw,34px);}
+  .section-head p{margin:14px 0 0; color:var(--ink-soft); font-size:16px;}
+
+  .checklist{background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .checklist-list{
+    list-style:none; margin:0; padding:0;
+    display:grid; grid-template-columns:1fr; gap:0;
+    border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  .checklist-list li{
+    display:flex; align-items:flex-start; gap:14px;
+    padding:18px 20px;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+  }
+  .checklist-list li:last-child{border-bottom:none;}
+  .checklist-list .box{
+    flex:none; width:20px; height:20px; margin-top:1px;
+    border-radius:5px; background:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .checklist-list .box svg{width:12px; height:12px;}
+  .checklist-list strong{font-weight:600;}
+  .checklist-list span.detail{color:var(--ink-soft);}
+
+  @media (min-width:760px){
+    .checklist-list{grid-template-columns:1fr 1fr;}
+    .checklist-list li:nth-child(odd){border-right:1px solid var(--line);}
+  }
+
+  /* ---------- modes ---------- */
+  .modes-grid{display:grid; grid-template-columns:1fr; gap:18px;}
+  @media (min-width:760px){ .modes-grid{grid-template-columns:repeat(3,1fr);} }
+  .mode-card{
+    border:1px solid var(--line); border-radius:12px; background:var(--panel);
+    padding:26px 24px;
+  }
+  .mode-card .icon{
+    width:38px; height:38px; border-radius:9px; background:#EDF4F1;
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+  }
+  .mode-card .icon svg{width:19px; height:19px;}
+  .mode-card h3{font-size:18px; margin-bottom:8px;}
+  .mode-card p{margin:0; font-size:14.5px; color:var(--ink-soft);}
+  .mode-card .keys{
+    display:inline-block; margin-top:14px; font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--ink-soft); background:#F1F0EA; border:1px solid var(--line);
+    padding:3px 8px; border-radius:5px;
+  }
+
+  /* ---------- dark demo strip ---------- */
+  .theme-strip{
+    background:var(--dark-bg); color:var(--dark-ink);
+    border-top:1px solid var(--dark-line); border-bottom:1px solid var(--dark-line);
+  }
+  .theme-strip .wrap{
+    display:grid; grid-template-columns:1fr; gap:40px; align-items:center; padding:64px 28px;
+  }
+  @media (min-width:860px){ .theme-strip .wrap{grid-template-columns:1fr 1fr;} }
+  .theme-strip h2{font-size:clamp(24px,3vw,30px); max-width:16ch;}
+  .theme-strip p{color:#B7BBB2; margin:16px 0 0; max-width:42ch; font-size:15.5px;}
+  .theme-toggle-demo{
+    border:1px solid var(--dark-line); border-radius:12px; overflow:hidden;
+    display:flex;
+  }
+  .theme-half{flex:1; padding:26px 22px;}
+  .theme-half.light{background:#F5F4EF; color:#1C1E1B;}
+  .theme-half.dark{background:#101314; color:#ECE9E1;}
+  .theme-half h5{margin:0 0 10px; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600;}
+  .theme-half p{margin:0; font-size:13px; opacity:.72; line-height:1.6;}
+
+  /* ---------- steps ---------- */
+  .steps{list-style:none; margin:0; padding:0; display:grid; gap:26px;}
+  @media (min-width:760px){ .steps{grid-template-columns:repeat(3,1fr);} }
+  .steps li{display:flex; gap:16px; align-items:flex-start;}
+  .step-num{
+    flex:none; width:34px; height:34px; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+  }
+  .steps h3{font-size:16px; margin-bottom:6px;}
+  .steps p{margin:0; font-size:14.5px; color:var(--ink-soft);}
+  .steps code{
+    background:#F1F0EA; border:1px solid var(--line); padding:1px 6px; border-radius:4px; font-size:13px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line); padding:44px 0;}
+  .footer-inner{
+    display:flex; flex-direction:column; gap:22px;
+  }
+  @media (min-width:760px){
+    .footer-inner{flex-direction:row; align-items:flex-end; justify-content:space-between;}
+  }
+  .footer-wordmark{
+    display:flex; align-items:center; gap:9px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+  }
+  .footer-license{margin:8px 0 0; font-size:13px; color:var(--ink-soft);}
+  .footer-links{display:flex; gap:22px; flex-wrap:wrap;}
+  .footer-links a{font-size:13.5px; text-decoration:none; color:var(--ink-soft); transition:color .15s ease;}
+  .footer-links a:hover{color:var(--ink);}
+
+  @media (prefers-reduced-motion:reduce){
+    .cursor{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="#top">
+      <svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#2F6F5E"/><path d="M6 8h6M6 12h10M6 16h7" stroke="#F5F4EF" stroke-width="1.7" stroke-linecap="round"/></svg>
+      MarkDown Editor
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#modes">Modes</a>
+      <a href="#start">Installation</a>
+      <a class="nav-cta" href="https://github.com/patrickjaillet/MarkDown-Editor" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5v-1.94c-2.78.62-3.37-1.22-3.37-1.22-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.32.1-2.75 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.43.2 2.49.1 2.75.64.71 1.03 1.62 1.03 2.74 0 3.92-2.34 4.78-4.57 5.04.36.32.68.94.68 1.9v2.82c0 .28.18.6.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1>Le Markdown, tel qu'il devrait se lire.</h1>
+        <p class="lede">Un lecteur et éditeur Markdown natif pour Windows — portable, hors-ligne, et pensé d'abord pour la lecture.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://github.com/patrickjaillet/MarkDown-Editor/releases/latest" target="_blank" rel="noopener">Télécharger</a>
+          <a class="btn btn-ghost" href="https://github.com/patrickjaillet/MarkDown-Editor" target="_blank" rel="noopener">Code source</a>
+        </div>
+        <p class="hero-meta">Windows 10 / 11 · 64 bits · Aucune installation · GPL-3.0-or-later</p>
+      </div>
+
+      <div class="demo">
+        <div class="demo-toolbar">
+          <div class="demo-dots"><span></span><span></span><span></span></div>
+          <div class="demo-mode">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4,6 C7,4 10,4 12,6 C14,4 17,4 20,6 L20,18 C17,16 14,16 12,18 C10,16 7,16 4,18 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            Lecture
+          </div>
+          <div class="demo-mode">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3,21 L3,17 L16,4 L20,8 L7,21 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            Édition
+          </div>
+          <div class="demo-mode is-active">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="8" height="16" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="4" width="8" height="16" rx="1.2" stroke="currentColor" stroke-width="1.6"/></svg>
+            Vue partagée
+          </div>
+        </div>
+        <div class="demo-panels">
+          <div class="demo-panel demo-source"><span class="tok-h"># Notes de sprint</span>
+
+Un éditeur <span class="tok-b">**portable**</span> et
+<span class="tok-i">*hors-ligne*</span>, pensé pour la lecture.
+
+- Aucune télémétrie
+- Aucun installeur
+- 100 % natif Windows<span class="cursor"></span></div>
+          <div class="demo-panel demo-rendered">
+            <h4>Notes de sprint</h4>
+            <p>Un éditeur <strong>portable</strong> et <em>hors-ligne</em>, pensé pour la lecture.</p>
+            <ul>
+              <li>Aucune télémétrie</li>
+              <li>Aucun installeur</li>
+              <li>100 % natif Windows</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="checklist" id="features">
+    <div class="wrap section">
+      <div class="section-head">
+        <h2>Conçu sans compromis</h2>
+        <p>Chaque contrainte du projet est tenue au même niveau d'exigence, du premier lancement à la dernière ligne de code.</p>
+      </div>
+      <ul class="checklist-list">
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>100 % portable</strong> — <span class="detail">un dossier, aucun installeur, jamais.</span></span>
+        </li>
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>100 % hors-ligne</strong> — <span class="detail">aucune requête réseau, aucune télémétrie.</span></span>
+        </li>
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>Rendu natif</strong> — <span class="detail">FlowDocument WPF, sans moteur HTML embarqué.</span></span>
+        </li>
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>Thème clair / sombre</strong> — <span class="detail">automatique, ou basculé en un clic.</span></span>
+        </li>
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>Interface bilingue</strong> — <span class="detail">Français / Anglais, détectée au démarrage.</span></span>
+        </li>
+        <li>
+          <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>Licence libre</strong> — <span class="detail">GNU GPL-3.0-or-later, code source ouvert.</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="modes">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Trois façons de travailler</h2>
+        <p>Le même document, sous trois angles — basculez en un raccourci clavier.</p>
+      </div>
+      <div class="modes-grid">
+        <article class="mode-card">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4,6 C7,4 10,4 12,6 C14,4 17,4 20,6 L20,18 C17,16 14,16 12,18 C10,16 7,16 4,18 Z" stroke="#2F6F5E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Lecture</h3>
+          <p>Un rendu Markdown/GFM complet — titres, tableaux, citations, listes de tâches — dans une mise en page aérée et lisible.</p>
+          <span class="keys">Ctrl 1</span>
+        </article>
+        <article class="mode-card">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3,21 L3,17 L16,4 L20,8 L7,21 Z" stroke="#2F6F5E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Édition</h3>
+          <p>Texte brut avec coloration syntaxique dédiée au Markdown, pour écrire vite sans quitter le clavier.</p>
+          <span class="keys">Ctrl 2</span>
+        </article>
+        <article class="mode-card">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="8" height="16" rx="1.2" stroke="#2F6F5E" stroke-width="1.6"/><rect x="13" y="4" width="8" height="16" rx="1.2" stroke="#2F6F5E" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Vue partagée</h3>
+          <p>Source et rendu côte à côte, synchronisés, pour relire pendant que vous écrivez.</p>
+          <span class="keys">Ctrl 3</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme-strip">
+    <div class="wrap">
+      <div>
+        <h2>Clair le jour, sombre le soir.</h2>
+        <p>Le thème suit celui de Windows par défaut, ou se bascule manuellement — l'interface et le rendu du document changent ensemble.</p>
+      </div>
+      <div class="theme-toggle-demo">
+        <div class="theme-half light">
+          <h5>Clair</h5>
+          <p>Papier clair, encre foncée. Confortable en plein jour.</p>
+        </div>
+        <div class="theme-half dark">
+          <h5>Sombre</h5>
+          <p>Fond profond, texte doux. Pensé pour les longues sessions du soir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Mise en route</h2>
+        <p>Aucune installation, aucun compte, aucune attente.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>Téléchargez</h3>
+            <p>Récupérez le dossier <code>MarkDownEditor</code> depuis les <a href="https://github.com/patrickjaillet/MarkDown-Editor/releases/latest" target="_blank" rel="noopener">releases GitHub</a> et placez-le où vous voulez, y compris sur une clé USB.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>Lancez</h3>
+            <p>Double-cliquez sur <code>MarkDownEditor.exe</code>. Aucune dépendance .NET à installer au préalable.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>Ouvrez un fichier</h3>
+            <p>Utilisez <code>Ouvrir</code>, ou associez l'extension <code>.md</code> pour ouvrir vos fichiers en un double-clic.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-wordmark">
+        <svg width="18" height="18" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#2F6F5E"/><path d="M6 8h6M6 12h10M6 16h7" stroke="#F5F4EF" stroke-width="1.7" stroke-linecap="round"/></svg>
+        MarkDown Editor
+      </div>
+      <p class="footer-license">© 2026 SANDEFJORD / Patrick JAILLET — Distribué sous licence GPL-3.0-or-later</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:sandefjord.development@proton.me">Contact</a>
+      <a href="https://github.com/patrickjaillet/MarkDown-Editor" target="_blank" rel="noopener">Code source</a>
+      <a href="https://github.com/patrickjaillet/MarkDown-Editor/blob/main/LICENSE" target="_blank" rel="noopener">Licence</a>
+      <a href="https://github.com/patrickjaillet/MarkDown-Editor/blob/main/docs/THIRD_PARTY_NOTICES.md" target="_blank" rel="noopener">Mentions tierces</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
