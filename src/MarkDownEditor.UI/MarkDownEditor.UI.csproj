@@ -1,0 +1,46 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MarkDownEditor.UI</RootNamespace>
+    <AssemblyName>MarkDownEditor.UI</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <!--
+      Coloration syntaxique du mode Édition (Phase 2). Arbitrage tranché
+      en faveur d'AvalonEdit plutôt qu'une implémentation RichTextBox
+      custom (voir ROADMAP.md, §7 Risques, point 2). AvalonEdit cible
+      officiellement net6.0-windows/net8.0-windows ; compatibilité avec
+      net10.0-windows à revalider à l'ouverture du projet (voir
+      CLAUDE.md, "Pièges connus").
+    -->
+    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarkDownEditor.Core\MarkDownEditor.Core.csproj" />
+    <ProjectReference Include="..\MarkDownEditor.Rendering\MarkDownEditor.Rendering.csproj" />
+    <ProjectReference Include="..\MarkDownEditor.Localization\MarkDownEditor.Localization.csproj" />
+  </ItemGroup>
+
+  <!--
+    Définition de coloration syntaxique Markdown (mode Édition, Phase 2) :
+    embarquée dans l'assembly, jamais chargée depuis un fichier externe,
+    conformément à la portabilité stricte.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Editing\Markdown.xshd">
+      <LogicalName>MarkDownEditor.UI.Editing.Markdown.xshd</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+      <EmbeddedResource Update="Editing\Markdown.xshd" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,128 @@
+{
+  "_meta": {
+    "language": "fr",
+    "displayName": "Français",
+    "version": "1.0.0"
+  },
+  "app": {
+    "title": "MarkDown Editor",
+    "untitledDocument": "Document sans titre"
+  },
+  "shortcuts": {
+    "new": "Ctrl+N",
+    "open": "Ctrl+O",
+    "save": "Ctrl+S",
+    "saveAs": "Ctrl+Maj+S",
+    "exportHtml": "Ctrl+Maj+E",
+    "toggleTheme": "Ctrl+T",
+    "about": "F1"
+  },
+  "menu": {
+    "file": {
+      "header": "Fichier",
+      "new": "Nouveau",
+      "open": "Ouvrir…",
+      "save": "Enregistrer",
+      "saveAs": "Enregistrer sous…",
+      "exportHtml": "Exporter en HTML…",
+      "exportPdf": "Exporter en PDF…",
+      "recentFiles": "Fichiers récents",
+      "exit": "Quitter"
+    },
+    "edit": {
+      "header": "Édition",
+      "undo": "Annuler",
+      "redo": "Rétablir",
+      "cut": "Couper",
+      "copy": "Copier",
+      "paste": "Coller",
+      "bold": "Gras",
+      "italic": "Italique",
+      "insertLink": "Insérer un lien…",
+      "insertCodeBlock": "Insérer un bloc de code"
+    },
+    "view": {
+      "header": "Affichage",
+      "readingMode": "Mode lecture",
+      "editingMode": "Mode édition",
+      "splitView": "Vue partagée",
+      "toggleTheme": "Basculer thème clair/sombre",
+      "zoomIn": "Zoomer",
+      "zoomOut": "Dézoomer",
+      "resetZoom": "Réinitialiser le zoom"
+    },
+    "settings": {
+      "header": "Paramètres",
+      "language": "Langue",
+      "theme": "Thème",
+      "font": "Police de lecture",
+      "fontSize": "Taille de police"
+    },
+    "help": {
+      "header": "Aide",
+      "about": "À propos de MarkDown Editor",
+      "userGuide": "Guide d'utilisation",
+      "thirdPartyNotices": "Mentions tierces",
+      "license": "Licence"
+    }
+  },
+  "sidebar": {
+    "recentFiles": "Fichiers récents",
+    "tableOfContents": "Table des matières",
+    "noRecentFiles": "Aucun fichier récent",
+    "noHeadings": "Ce document ne contient aucun titre",
+    "toggle": "Afficher/masquer le panneau latéral",
+    "recentFilesTab": "Récents",
+    "tableOfContentsTab": "Sommaire"
+  },
+  "dragDrop": {
+    "overlayHint": "Déposez un fichier Markdown pour l'ouvrir",
+    "unsupportedFile": "Seuls les fichiers .md peuvent être ouverts par glisser-déposer."
+  },
+  "statusBar": {
+    "words": "{0} mots",
+    "characters": "{0} caractères",
+    "readingTime": "{0} min de lecture",
+    "unsavedChanges": "Modifications non enregistrées",
+    "savedAt": "Enregistré à {0}",
+    "exportedAt": "Exporté en HTML à {0}"
+  },
+  "dialogs": {
+    "unsavedChangesTitle": "Modifications non enregistrées",
+    "unsavedChangesMessage": "Ce document contient des modifications non enregistrées. Voulez-vous les enregistrer avant de fermer ?",
+    "save": "Enregistrer",
+    "discard": "Ne pas enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "about": {
+    "title": "À propos de MarkDown Editor",
+    "productName": "MarkDown Editor",
+    "versionLabel": "Version {0}",
+    "copyright": "© 2026 SANDEFJORD / Patrick JAILLET",
+    "licenseLabel": "Licence",
+    "licenseName": "GNU General Public License v3.0 (GPL-3.0-or-later)",
+    "licenseMention": "Distribué sous licence GPL-3.0-or-later",
+    "contactLabel": "Contact",
+    "contactEmail": "sandefjord.development@proton.me",
+    "websiteLabel": "Site web officiel",
+    "websiteUrl": "https://patrickjaillet.github.io/MarkDown-Editor",
+    "thirdPartyNoticesLink": "Consulter les mentions tierces",
+    "licenseFileLink": "Consulter le texte complet de la licence"
+  },
+  "fileAssociation": {
+    "registerTitle": "Associer les fichiers .md",
+    "registerDescription": "Enregistrer MarkDown Editor comme application par défaut pour ouvrir les fichiers .md.",
+    "registerButton": "Associer les fichiers .md",
+    "unregisterButton": "Supprimer l'association"
+  },
+  "errors": {
+    "fileNotFound": "Le fichier « {0} » est introuvable.",
+    "fileReadError": "Une erreur est survenue lors de la lecture du fichier « {0} ».",
+    "fileWriteError": "Une erreur est survenue lors de l'enregistrement du fichier « {0} ».",
+    "exportError": "Une erreur est survenue lors de l'export vers « {0} ».",
+    "renderError": "Une erreur est survenue lors du rendu du document en mode Lecture.",
+    "invalidMarkdown": "Le document n'a pas pu être interprété comme du Markdown valide."
+  }
+}

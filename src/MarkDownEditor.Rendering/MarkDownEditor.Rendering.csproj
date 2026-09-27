@@ -1,0 +1,20 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MarkDownEditor.Rendering</RootNamespace>
+    <AssemblyName>MarkDownEditor.Rendering</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.37.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarkDownEditor.Core\MarkDownEditor.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,81 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<!--
+    Définition de coloration syntaxique Markdown pour AvalonEdit
+    (format XSHD). Les couleurs réelles sont injectées à l'exécution par
+    MarkdownHighlightingProvider, qui reprend la palette de
+    MarkdownRenderTheme ; les valeurs ci-dessous ne servent que de
+    repli statique et ne doivent jamais être lues directement par le
+    reste de l'application (pas de couleur codée en dur côté C#).
+-->
+<SyntaxDefinition name="Markdown"
+                   xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+  <Color name="Heading" foreground="#2F6FED" fontWeight="bold" />
+  <Color name="Emphasis" fontStyle="italic" />
+  <Color name="StrongEmphasis" fontWeight="bold" />
+  <Color name="Strikethrough" strikethrough="true" />
+  <Color name="InlineCode" foreground="#B4009E" />
+  <Color name="CodeFence" foreground="#6B7280" />
+  <Color name="Blockquote" foreground="#6B7280" fontStyle="italic" />
+  <Color name="ListMarker" foreground="#2F6FED" fontWeight="bold" />
+  <Color name="Link" foreground="#2F6FED" />
+  <Color name="HorizontalRule" foreground="#9AA1AC" fontWeight="bold" />
+  <Color name="TableDelimiter" foreground="#9AA1AC" />
+
+  <RuleSet>
+    <!-- Titres ATX : # à ###### en début de ligne. -->
+    <Rule color="Heading">^\#{1,6}\s.*$</Rule>
+
+    <!-- Bloc de code délimité par des barres obliques inverses. -->
+    <Rule color="CodeFence">^(```|~~~).*$</Rule>
+
+    <!-- Citation. -->
+    <Rule color="Blockquote">^&gt;.*$</Rule>
+
+    <!-- Séparateur horizontal (Regex sans rétro-référence \1). -->
+    <Rule color="HorizontalRule">^\s*(-{3,}|\*{3,}|_{3,})\s*$</Rule>
+
+    <!-- Puces de liste non ordonnée et de tâche. -->
+    <Rule color="ListMarker">^\s*([-*+]|\d+\.)\s([[ xX]]\s)?</Rule>
+
+    <!-- Délimiteur de ligne de séparation de tableau GFM. -->
+    <Rule color="TableDelimiter">^\s*\|?(\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?\s*$</Rule>
+
+    <!-- Code en ligne. -->
+    <Span color="InlineCode">
+      <Begin>`</Begin>
+      <End>`</End>
+    </Span>
+
+    <!-- Gras : ** ou __. -->
+    <Span color="StrongEmphasis" multiline="false">
+      <Begin>\*\*</Begin>
+      <End>\*\*</End>
+    </Span>
+    <Span color="StrongEmphasis" multiline="false">
+      <Begin>__</Begin>
+      <End>__</End>
+    </Span>
+
+    <!-- Barré : ~~. -->
+    <Span color="Strikethrough" multiline="false">
+      <Begin>~~</Begin>
+      <End>~~</End>
+    </Span>
+
+    <!-- Italique : * ou _ isolés. -->
+    <Span color="Emphasis" multiline="false">
+      <Begin>\*</Begin>
+      <End>\*</End>
+    </Span>
+    <Span color="Emphasis" multiline="false">
+      <Begin>_</Begin>
+      <End>_</End>
+    </Span>
+
+    <!-- Lien ou image : [texte](url) ou ![alt](url). -->
+    <Rule color="Link">!?\[[^\]]*\]\([^\)]*\)</Rule>
+  </RuleSet>
+
+</SyntaxDefinition>

@@ -1,0 +1,9 @@
+{
+  "_comment": "Fichier de configuration portable par défaut. Copié en 'settings.local.json' (ignoré par git) au premier lancement pour stocker les préférences réelles de l'utilisateur, sans jamais écrire dans %APPDATA%.",
+  "language": "auto",
+  "theme": "auto",
+  "viewMode": "Reading",
+  "readingFont": "Segoe UI Variable",
+  "readingFontSize": 16,
+  "recentFiles": []
+}

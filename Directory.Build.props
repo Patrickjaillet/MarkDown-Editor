@@ -1,0 +1,37 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>13.0</LangVersion>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+
+    <!-- Métadonnées d'assembly communes -->
+    <Product>MarkDown Editor</Product>
+    <Company>SANDEFJORD</Company>
+    <Authors>Patrick JAILLET</Authors>
+    <Copyright>© 2026 SANDEFJORD / Patrick JAILLET</Copyright>
+    <Version>0.1.0</Version>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <NeutralLanguage>fr</NeutralLanguage>
+
+    <!-- Licence -->
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+
+    <!-- Rigueur de compilation -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <!-- Portabilité : pas de génération de PDB séparé encombrant en Release -->
+    <DebugType Condition="'$(Configuration)'=='Release'">embedded</DebugType>
+  </PropertyGroup>
+
+</Project>

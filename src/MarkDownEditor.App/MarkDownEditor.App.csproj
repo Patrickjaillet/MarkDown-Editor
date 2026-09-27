@@ -1,0 +1,57 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MarkDownEditor.App</RootNamespace>
+    <AssemblyName>MarkDownEditor</AssemblyName>
+    <ApplicationIcon>..\..\assets\icons\app.ico</ApplicationIcon>
+
+    <!-- Portabilité stricte : un seul exécutable autonome, pas d'installeur -->
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+    <!-- 100 % hors-ligne : aucune télémétrie .NET envoyée au démarrage -->
+    <DOTNET_CLI_TELEMETRY_OPTOUT>1</DOTNET_CLI_TELEMETRY_OPTOUT>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarkDownEditor.Core\MarkDownEditor.Core.csproj" />
+    <ProjectReference Include="..\MarkDownEditor.Rendering\MarkDownEditor.Rendering.csproj" />
+    <ProjectReference Include="..\MarkDownEditor.UI\MarkDownEditor.UI.csproj" />
+    <ProjectReference Include="..\MarkDownEditor.Localization\MarkDownEditor.Localization.csproj" />
+  </ItemGroup>
+
+  <!--
+    Assets embarqués : copiés à côté de l'exécutable pour garantir
+    la portabilité totale (aucune ressource externe requise).
+  -->
+  <ItemGroup>
+    <None Include="..\..\assets\i18n\en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>assets\i18n\en.json</Link>
+    </None>
+    <None Include="..\..\assets\i18n\fr.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>assets\i18n\fr.json</Link>
+    </None>
+    <None Include="..\..\assets\icons\app.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>assets\icons\app.ico</Link>
+    </None>
+    <None Include="..\..\config\settings.default.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>config\settings.default.json</Link>
+    </None>
+  </ItemGroup>
+
+</Project>

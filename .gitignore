@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 SANDEFJORD / Patrick JAILLET
+#
+# Fichiers de pilotage interne — jamais versionnés
+ROADMAP.md
+CLAUDE.md
+MEMOIRE.md
+
+# Artefacts de build .NET / Visual Studio
+bin/
+obj/
+out/
+publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Dossiers Visual Studio / Rider
+.vs/
+.idea/
+*.DotSettings.user
+
+# Résultats de publication portable
+/build/
+/dist/
+/scripts/output/
+
+# Configuration utilisateur locale (portable, ne doit pas être versionnée par défaut)
+config/settings.local.json
+
+# Fichiers temporaires système
+*.log
+*.tmp
+*.bak
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Packages NuGet restaurés localement
+*.nupkg
+**/packages/
+
+# Résultats de tests
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Clés / secrets éventuels (aucun ne doit exister dans ce projet 100 % hors-ligne)
+*.pfx
+*.snk
+secrets.json

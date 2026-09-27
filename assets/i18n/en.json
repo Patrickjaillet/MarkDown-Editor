@@ -1,0 +1,128 @@
+{
+  "_meta": {
+    "language": "en",
+    "displayName": "English",
+    "version": "1.0.0"
+  },
+  "app": {
+    "title": "MarkDown Editor",
+    "untitledDocument": "Untitled document"
+  },
+  "shortcuts": {
+    "new": "Ctrl+N",
+    "open": "Ctrl+O",
+    "save": "Ctrl+S",
+    "saveAs": "Ctrl+Shift+S",
+    "exportHtml": "Ctrl+Shift+E",
+    "toggleTheme": "Ctrl+T",
+    "about": "F1"
+  },
+  "menu": {
+    "file": {
+      "header": "File",
+      "new": "New",
+      "open": "Open…",
+      "save": "Save",
+      "saveAs": "Save As…",
+      "exportHtml": "Export as HTML…",
+      "exportPdf": "Export as PDF…",
+      "recentFiles": "Recent files",
+      "exit": "Exit"
+    },
+    "edit": {
+      "header": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "bold": "Bold",
+      "italic": "Italic",
+      "insertLink": "Insert link…",
+      "insertCodeBlock": "Insert code block"
+    },
+    "view": {
+      "header": "View",
+      "readingMode": "Reading mode",
+      "editingMode": "Editing mode",
+      "splitView": "Split view",
+      "toggleTheme": "Toggle dark/light theme",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetZoom": "Reset zoom"
+    },
+    "settings": {
+      "header": "Settings",
+      "language": "Language",
+      "theme": "Theme",
+      "font": "Reading font",
+      "fontSize": "Font size"
+    },
+    "help": {
+      "header": "Help",
+      "about": "About MarkDown Editor",
+      "userGuide": "User guide",
+      "thirdPartyNotices": "Third-party notices",
+      "license": "License"
+    }
+  },
+  "sidebar": {
+    "recentFiles": "Recent files",
+    "tableOfContents": "Table of contents",
+    "noRecentFiles": "No recent files",
+    "noHeadings": "This document has no headings",
+    "toggle": "Show/hide side panel",
+    "recentFilesTab": "Recent",
+    "tableOfContentsTab": "Outline"
+  },
+  "dragDrop": {
+    "overlayHint": "Drop a Markdown file to open it",
+    "unsupportedFile": "Only .md files can be opened by drag and drop."
+  },
+  "statusBar": {
+    "words": "{0} words",
+    "characters": "{0} characters",
+    "readingTime": "{0} min read",
+    "unsavedChanges": "Unsaved changes",
+    "savedAt": "Saved at {0}",
+    "exportedAt": "Exported to HTML at {0}"
+  },
+  "dialogs": {
+    "unsavedChangesTitle": "Unsaved changes",
+    "unsavedChangesMessage": "This document has unsaved changes. Do you want to save them before closing?",
+    "save": "Save",
+    "discard": "Discard",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "about": {
+    "title": "About MarkDown Editor",
+    "productName": "MarkDown Editor",
+    "versionLabel": "Version {0}",
+    "copyright": "© 2026 SANDEFJORD / Patrick JAILLET",
+    "licenseLabel": "License",
+    "licenseName": "GNU General Public License v3.0 (GPL-3.0-or-later)",
+    "licenseMention": "Distributed under the GPL-3.0-or-later license",
+    "contactLabel": "Contact",
+    "contactEmail": "sandefjord.development@proton.me",
+    "websiteLabel": "Official website",
+    "websiteUrl": "https://patrickjaillet.github.io/MarkDown-Editor",
+    "thirdPartyNoticesLink": "View third-party notices",
+    "licenseFileLink": "View full license text"
+  },
+  "fileAssociation": {
+    "registerTitle": "Associate .md files",
+    "registerDescription": "Register MarkDown Editor as the default application for opening .md files.",
+    "registerButton": "Associate .md files",
+    "unregisterButton": "Remove association"
+  },
+  "errors": {
+    "fileNotFound": "The file '{0}' could not be found.",
+    "fileReadError": "An error occurred while reading the file '{0}'.",
+    "fileWriteError": "An error occurred while saving the file '{0}'.",
+    "exportError": "An error occurred while exporting to '{0}'.",
+    "renderError": "An error occurred while rendering the document in Reading mode.",
+    "invalidMarkdown": "The document could not be parsed as valid Markdown."
+  }
+}

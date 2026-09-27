@@ -1,0 +1,12 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SANDEFJORD / Patrick JAILLET -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>false</UseWPF>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MarkDownEditor.Localization</RootNamespace>
+    <AssemblyName>MarkDownEditor.Localization</AssemblyName>
+  </PropertyGroup>
+
+</Project>
